@@ -21,15 +21,20 @@ io.on('connection', (socket) => {
     // });
 
     //message from server to client
-    socket.emit('newMessage', {
-        from: 'Evan',
-        text: 'message from server admin to client',
-        createAt: Date()
-    });
+    // socket.emit('newMessage', {
+    //     from: 'Evan',
+    //     text: 'message from server admin to client',
+    //     createAt: Date()
+    // });
 
     //listen an event sent from client to server
-    socket.on('createMessage', (newMessage) => {
-        console.log('createMessage', newMessage);
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
     });
 
     // socket.on('createEmail', (newEmail) => {

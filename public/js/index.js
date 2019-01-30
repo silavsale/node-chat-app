@@ -1,17 +1,17 @@
 var socket = io();
 
 socket.on('connect', function () {
-    console.log('Connected to server');
+    console.log('Connected to server ' + socket.id);
 
     // socket.emit('createEmail', {
     //     to: 'jane@example.com',
     //     text: 'Hey. This is Sergo.'
     // });
 
-    socket.emit('createMessage', {
-        from: 'Paul',
-        text: 'Whats up'
-    });
+    // socket.emit('createMessage', {
+    //     from: 'Paul',
+    //     text: 'Whats up'
+    // });
 
 });
 
