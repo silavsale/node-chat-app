@@ -21,10 +21,10 @@ io.on('connection', (socket) => {
 
 
     //listen an event sent from client to server
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
-
+        // callback('This is from the server.');
 
         // broadcast to other clients
         // socket.broadcast.emit('newMessage', {
