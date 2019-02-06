@@ -1,3 +1,5 @@
+
+// Parse, validate, manipulate, and display dates and times in JavaScript.
 var moment = require('moment');
 
 var generateMessage = (from, text) => {
