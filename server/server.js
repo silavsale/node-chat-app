@@ -43,21 +43,29 @@ io.on('connection', (socket) => {
 
     //listen an event sent from client to server
     socket.on('createMessage', (message, callback) => {
+        var user = users.getUser(socket.id);
+
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+        }
+
         console.log('createMessage', message);
-        io.emit('newMessage', generateMessage(message.from, message.text));
         callback();
     });
 
     socket.on('createLocationMessage', (coords) => {
+        var user = users.getUser(socket.id);
         // io.emit('newMessage', generateMessage('Admin', `${coords.latitude}, ${coords.longitude}`));
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        }
     });
 
     socket.on('disconnect', () => {
 
         var user = users.removeUser(socket.id);
 
-        if (user){
+        if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
             io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left`));
 
